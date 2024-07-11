@@ -1,0 +1,100 @@
+<html>
+
+<head>
+    <title>Student Percentage</title>
+    <style>
+        body {
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 120px;
+        }
+
+        .frame {
+            display: flex;
+            justify-content: center;
+            width: 500px;
+            text-align: center;
+            background-color: wheat;
+            flex-direction: row;
+            display: flex;
+            gap: 30px;
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .section1 {
+            width: 150px;
+            height: 60px;
+            text-align: center;
+        }
+
+        .fs {
+            font-size: 26px;
+        }
+
+        .click {
+            background-color: brown;
+            border-radius: 10px;
+            color: white;
+            font-size: large;
+            font-family: cursive;
+        }
+
+        .percent {
+            font-size: larger;
+            font-weight: bolder;
+            padding-top: 20px;
+        }
+
+        .final {
+            display: flex;
+            justify-content: center;
+            color: black;
+        }
+
+        button:focus {
+            background-color: green;
+        }
+    </style>
+
+    <head>
+
+    <body>
+        <div class="container">
+            <div class="frame">
+                <div>
+                    <input type="text" class="section1 fs" id="number"/>
+                    <span class="percent">%</span>
+                </div>
+                <button class="section1 click" onclick="percentage()">Submit</button>
+            </div>
+        </div>
+        <p class="final fs">Result: <span id="result"></span></p>
+    </body>
+    <script>
+        function percentage(percentage) {
+             var percentage = document.getElementById('number').value
+            var result;
+             if(percentage >= 0 && percentage <= 20) {
+                result = "very poor";
+             }else if(percentage > 20 && percentage <= 30) {
+                result = "poor";
+             }else if(percentage > 30 && percentage <= 50) {
+                result = "average";
+             }else if(percentage > 50 && percentage <= 70) {    
+                result = "above average";
+             }else if(percentage > 70 && percentage <= 90) {
+                result = "good";
+             }else if(percentage > 90 && percentage <= 100) {
+                result = "outstanding";
+             }else {
+                result = "err";
+             }
+             document.getElementById('result').innerText = result;
+        }
+    </script>
+    <html>

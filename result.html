@@ -1,0 +1,177 @@
+<html>
+
+<head>
+    <title>Result</title>
+    <style>
+        body {
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 30px;
+        }
+
+        .frame {
+            display: flex;
+            justify-content: center;
+            width: 500px;
+            text-align: center;
+            background-color: wheat;
+            flex-direction: row;
+            display: flex;
+            gap: 30px;
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .section1 {
+            width: 100px;
+            height: 60px;
+            text-align: center;
+        }
+
+        .fs {
+            font-size: 26px;
+        }
+
+        .click {
+            background-color: brown;
+            border-radius: 10px;
+            color: white;
+            font-size: large;
+            font-family: cursive;
+            margin-left: 52px;
+
+        }
+
+        .percent {
+            font-size: larger;
+            font-weight: bolder;
+            padding-top: 20px;
+        }
+
+        .final {
+            display: flex;
+            justify-content: center;
+            color: black;
+            flex-direction: column;
+        }
+
+        button:focus {
+            background-color: green;
+        }
+
+        .part {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dir {
+            margin-right: 16px;
+        }
+
+        .dir2 {
+            margin-right: 6px;
+        }
+
+        .dir3 {
+            margin-right: 14px
+        }
+
+        .dir4 {
+            margin-right: 66px;
+        }
+
+        .dir5 {
+            margin-top: 10px;
+        }
+
+        .clr2 {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="frame">
+            <div class="part">
+                <div>
+                    <span class="percent">Tamil</span>
+                    <input type="text" onkeydown="calc()" class="section1 fs" id="tamil" />
+                </div>
+                <span class="clr2" id="err1"></span>
+                <div class="dir">
+                    <span class="percent">English</span>
+                    <input type="text" onkeydown="calc()" class="section1 fs" id="english" />
+                </div>
+                <span class="clr2" id="err2"></span>
+                <div class="dir2">
+                    <span class="percent">Maths</span>
+                    <input type="text" onkeydown="calc()" class="section1 fs" id="maths" />
+                </div>
+                <span class="clr2" id="err3"></span>
+                <div class="dir3">
+                    <span class="percent">Science</span>
+                    <input type="text" onkeydown="calc()" class="section1 fs" id="science" />
+                </div>
+                <span class="clr2" id="err4"></span>
+                <div class="dir4">
+                    <span class="percent">Social Science</span>
+                    <input type="text" onkeydown="calc()" class="section1 fs" id="social" />
+                </div>
+                <span class="clr2" id="err5"></span>
+                <div class="dir5">
+                    <button class="section1 click" onclick="calc()">Submit</button>
+                </div>
+            </div>
+            <p class="final fs">Result<span id="result1"></span><span id="result2"></span><span id="result3"></span></p>
+        </div>
+    </div>
+</body>
+<script>
+    function calc() {
+        var t = document.getElementById('tamil').value;
+        var e = document.getElementById('english').value;
+        var m = document.getElementById('maths').value;
+        var s = document.getElementById('science').value;
+        var ss = document.getElementById('social').value;
+
+        var tamInvalid = isNaN(t)
+        var engInvalid = isNaN(e)
+        var mathInvalid = isNaN(m)
+        var sciInvalid = isNaN(s)
+        var socInvalid = isNaN(ss)
+
+        document.getElementById('err1').innerText = tamInvalid ? "invalid" : '';
+        document.getElementById('err2').innerText = engInvalid ? "invalid" : '';
+        document.getElementById('err3').innerText = mathInvalid ? "invalid" : '';
+        document.getElementById('err4').innerText = sciInvalid ? "invalid" : '';
+        document.getElementById('err5').innerText = socInvalid ? "invalid" : '';
+
+
+        if (tamInvalid || engInvalid || mathInvalid || sciInvalid || socInvalid) {
+            return
+        }
+
+        var total = parseInt(t) + parseInt(e) + parseInt(m) + parseInt(s) + parseInt(ss);
+
+        var avg = total / 5;
+
+        var result;
+
+        if (t < 35 || e < 35 || m < 35 || s < 35 || ss < 35) {
+            result = "fail"
+        }
+
+        document.getElementById('result1').innerText = "Totalmarks : " + total;
+        document.getElementById('result2').innerText = "Average : " + avg;
+        document.getElementById('result3').innerText = "result : " + result;
+    }
+</script>
+
+</html>

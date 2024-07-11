@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h2>My First Web Page</h2>
+    <p>My First Paragraph.</p>
+
+    <p id="demo">test</p>
+
+    <script>
+        document.getElementById("demo").remove()
+        var a = document.createElement('p')
+        a.innerText = 'demo'
+        var body = document.getElementsByTagName('body')
+        body[0].innerHTML = '<p>demo1</p>'
+        body[0].appendChild(a)
+    </script>
+
+</body>
+
+</html>
