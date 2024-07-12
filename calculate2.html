@@ -1,0 +1,182 @@
+<html>
+
+<head>
+    <title>Big calculator</title>
+    <style>
+        body {
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 520px;
+            display: flex;
+            justify-content: center;
+            background-color: black;
+            border-radius: 10px;
+            margin-inline-start: 30%;
+            margin-top: 60px;
+        }
+
+        .frame {
+            width: 500px;
+            height: auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .section1 {
+            width: 400px;
+            height: 75px;
+            direction: rtl;
+            outline: none;
+        }
+
+        .frame2 {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            margin: 40px;
+            padding-left: 6px;
+        }
+
+        .label {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+        }
+
+        .size {
+            font-size: 30px;
+        }
+
+        .part {
+            width: 70px;
+            height: 40px;
+            background-color: grey;
+            font-size: 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: white;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+
+        .wt {
+            background-color: white;
+            outline: none;
+            text-align: right;
+            margin: 0px 0.4px;
+            font-size: 20px;
+        }
+
+        .inputLabel {
+            flex-direction: column;
+            display: flex;
+            width: 400px;
+            margin-left: 44px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="frame">
+            <div class="inputLabel">
+                <span class="wt" id="allInputs"></span>
+                <input type="text" class="section1 size" id="result" />
+            </div>
+            <div class="frame2">
+                <div class="label">
+                    <input type="button" class="part" onclick="doCalc(7)" value="7">
+                    <input type="button" class="part" onclick="doCalc(8)" value="8">
+                    <input type="button" class="part" onclick="doCalc(9)" value="9">
+                    <input type="button" class="part" onclick="doCalc('+')" value="+">
+                </div>
+                <div class="label">
+                    <input type="button" class="part" onclick="doCalc(4)" value="4">
+                    <input type="button" class="part" onclick="doCalc(5)" value="5">
+                    <input type="button" class="part" onclick="doCalc(6)" value="6">
+                    <input type="button" class="part" onclick="doCalc('-')" value="-">
+                </div>
+                <div class="label">
+                    <input type="button" class="part" onclick="doCalc(1)" value="1">
+                    <input type="button" class="part" onclick="doCalc(2)" value="2">
+                    <input type="button" class="part" onclick="doCalc(3)" value="3">
+                    <input type="button" class="part" onclick="doCalc('x')" value="x">
+                </div>
+                <div class="label">
+                    <input type="button" class="part" onclick="doCalc(0)" value="0">
+                    <input type="button" class="part" onclick="doCalc('.')" value=".">
+                    <input type="button" class="part" onclick="doCalc('=')" value="=">
+                    <input type="button" class="part" onclick="doCalc('/')" value="/">
+                </div>
+                <div class="center">
+                    <input type="button" class="part" onclick="resetInputs()" value="clear">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var operation = null
+    var input1 = null
+    var input2 = null
+    var isCalcDone = false
+    function doCalc(a) {
+
+        if(isCalcDone === true) {
+            resetInputs()
+            isCalcDone = false
+        }
+
+        var inputBoxValue = document.getElementById('result').value
+
+        if (a === '+' || a === '-' || a === 'x' || a === '/') {
+            input1 = parseInt(inputBoxValue)
+            document.getElementById('result').value = ''
+            operation = a
+            var el1;
+            el1 = input1 + operation
+            document.getElementById('allInputs').innerText = el1
+        } else if (a === "=") {
+            var finalResult;
+            var allInputs;
+            var final2Result;
+            input2 = parseInt(inputBoxValue)
+            allInputs = input1 + operation + input2 + a
+            document.getElementById('allInputs').innerText = allInputs
+
+            if (operation == '+') {
+                finalResult = input1 + input2
+            } else if (operation == '-') {
+                finalResult = input1 - input2
+            } else if (operation == 'x') {
+                finalResult = input1 * input2
+            } else if (operation == '/') {
+                finalResult = input1 / input2
+            } else {
+                finalResult = 'err'
+            }
+            document.getElementById('result').value = finalResult
+            isCalcDone = true
+        } else {
+            let result = inputBoxValue + a
+            document.getElementById('result').value = result
+        }
+    }
+
+    function resetInputs() {
+        document.getElementById('result').value = ''
+        document.getElementById('allInputs').innerText = ''
+        operation = null
+        input1 = null
+        input2 = null
+    }
+</script>
+
+</html>
