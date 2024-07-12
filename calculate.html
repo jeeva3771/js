@@ -1,0 +1,140 @@
+<html>
+
+<head>
+    <title>calculator</title>
+    <style>
+        .frame {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .cal {
+            width: 300px;
+            margin-top: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background-color: aqua;
+            padding: 50px;
+            border-radius: 4px;
+        }
+
+        .click {
+            width: 100px;
+            height: 34px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:focus {
+            background-color: lightgrey;
+        }
+
+        .finalResult {
+            background-color: white;
+        }
+
+        .dir {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .add {
+            margin-right: 20px
+        }
+
+        .mul {
+            margin-left: 8px;
+        }
+
+        .divn {
+            margin-right: 24px;
+        }
+
+        .res {
+            display: flex;
+            justify-content: left;
+            margin-left: 16px;
+        }
+
+        .headTxt {
+            font-weight: bolder;
+            font-size: 20px;
+
+        }
+
+        .valid1 {
+            display: flex;
+            justify-content: space-evenly;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="frame">
+        <div class="cal">
+            <span class="headTxt">Arithmetic Operation</span>
+            <div>
+                value1 :
+                <input type="text" id="value1" />
+                <span id="notValid1" class="valid1"></span>
+            </div>
+            <div>
+                value2 :
+                <input type="text" id="value2" />
+                <span id="notValid2"></span>
+            </div>
+            <div>
+                <button type="button" onclick="loadPage()" class ="click">calculate</button>
+            </div>
+
+            <div class="dir">
+                <span class="res">RESULT :</span>
+                <div class="add">
+                    Addition = <span id="add" class="finalResult">?</span>
+                </div>
+                <div>
+                    Substraction = <span id="sub" class="finalResult">?</span>
+                </div>
+                <div class="mul">
+                    Multipulation = <span id="mul" class="finalResult">?</span>
+                </div>
+                <div class="divn">
+                    Division = <span id="div" class="finalResult">?</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function loadPage() {
+        value1 = document.getElementById('value1').value;
+        value2 = document.getElementById('value2').value;
+
+        var value1InValid = isNaN(value1);
+        var value2InValid = isNaN(value2);
+
+        document.getElementById('notValid1').innerHTML =  value1InValid ? "invalid" : '';
+        document.getElementById('notValid2').innerHTML =  value2InValid ? "invalid" : '';
+
+        if (value1InValid || value2InValid) {
+            return
+        }
+
+        var result1 = parseFloat(value1) + parseFloat(value2);
+        var result2 = parseFloat(value1) - parseFloat(value2);
+        var result3 = parseFloat(value1) * parseFloat(value2);
+        var result4 = parseFloat(value1) / parseFloat(value2);
+
+        document.getElementById('add').innerHTML = result1;
+        document.getElementById('sub').innerHTML = result2;
+        document.getElementById('mul').innerHTML = result3;
+        document.getElementById('div').innerHTML = result4;
+    }
+</script>
+
+</html>
