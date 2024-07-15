@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title>Data</title>
+    <style>
+        body {
+            margin: 0px auto;
+        }
+
+        .container {
+            width: 500px;
+            background-color: blue;
+            display: flex;
+            justify-content: center;
+            margin-inline-start: 30%;
+            margin-top: 60px;
+        }
+
+        .section {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .label {
+            width: 400px;
+            height: 75px;
+            font-size: 30px;
+        }
+
+        input[type=button] {
+            width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            margin-left: 150px;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="section">
+            <input type="text" class="label" id="display" />
+            <input type="button" value="Calculate" onclick="data()"/>
+            <p id="result1"></p>
+            <p id="result2"></p>
+
+        </div>
+    </div>
+<body>
+<script>
+    var displayDom = document.getElementById('display')
+    function data() {
+        displayValue = displayDom.value
+        var part = displayValue.split('-')
+
+        part.forEach((student) => {
+        var studentMark = student.split(',')
+        var name = studentMark[0]
+        var tamil = parseInt(studentMark[1])
+        var english = parseInt(studentMark[2])
+        var maths = parseInt(studentMark[3])
+        var science = parseInt(studentMark[4])
+        var social = parseInt(studentMark[5])
+        var total = tamil + english + maths + science + social
+
+        document.getElementById('result1').innerText = name + " " + total
+        document.getElementById('result2').innerText = name + " " + total
+
+        })
+        
+
+    }
+</script>
+
+</html>
