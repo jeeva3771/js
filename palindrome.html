@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <title>Palindrome program</title>
+    <style>
+        .widHt {
+            width: 200px;
+            height: 50px;
+            font-size: 16px;
+        }
+
+        .submit {
+            width: 100px;
+            height: 40px;
+            background-color: black;
+            color: white;
+            font-size: larger;
+            border-radius: 6px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 70px;
+        }
+
+        .section {
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .click {
+            display: flex;
+            justify-content: center;
+        }
+
+        .final {
+            font-size: large;
+            color: black;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="section">
+            <input type="text" class="widHt" id="display" placeholder="value">
+            <span class="click"><button onclick="data()" class="submit">submit</button></span>
+            <span class="final">Result :</span>
+            <span id="result" class="final"></span>
+        </div>
+    </div>
+</body>
+
+<script>
+    function data() {
+        var result;
+        var inputBoxValue = document.getElementById('display').value;
+        var lower = inputBoxValue.toLowerCase()
+        var seperate = lower.split('')
+        var rev = seperate.reverse()
+        var join = rev.join('')
+        if (inputBoxValue == join) {
+            result = 'palindrome'
+        } else {
+            result = 'not a palindrome'
+        }
+        document.getElementById('result').innerText = result
+    }
+</script>
+
+</html>
