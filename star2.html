@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>star2</title>
+        <style>
+            .pattern {
+                text-align: center;
+                font-size: x-large;
+            }
+        </style>
+        <head>
+    <body>
+        <div id = "pattern" class="pattern"></div>
+    </body>
+    <script>
+        // var pattern = ''
+        // for(i=1; i<=5; i++) {
+        //     pattern += '* '.repeat(i) + '\n'
+        // }
+        // document.getElementById('pattern').innerText = pattern
+
+        var n = 5
+        var pattern = ''
+        for (i=n; i>=1; i--) {
+            pattern += '* '.repeat(i) + '\n'
+        }
+        document.getElementById('pattern').innerText = pattern
+
+    </script>
+</html>

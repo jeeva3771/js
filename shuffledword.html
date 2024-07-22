@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <title>Shuffledwords</title>
+    <style>
+        .widHt {
+            width: 200px;
+            height: 50px;
+            font-size: 16px;
+        }
+
+        .submit {
+            width: 100px;
+            height: 40px;
+            background-color: black;
+            color: white;
+            font-size: larger;
+            border-radius: 6px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 70px;
+        }
+
+        .section {
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .final {
+            font-size: large;
+            color: black;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <input type="text" class="widHt" id="input" placeholder="value" />
+            <button onclick="factorial()" class="submit">factorial</button>
+            <button onclick="series()" class="submit">series</button>
+            <button onclick="series2()" class="submit">series2</button>
+            <span class="final">Result :</span>
+            <input type="text" id="result" class="final" />
+        </div>
+    </div>
+</body>
+<script>
+    var inputBoxDom = document.getElementById('input')
+    var resultDom = document.getElementById('result')
+    function factorial() {
+        var inputValue = parseInt(inputBoxDom.value);
+        var a = 1;
+        for (i = 1; i <= inputValue; i++) {
+            a = a * i
+        }
+        resultDom.value = a;
+    }
+
+    function series() {
+        var inputValue = parseInt(inputBoxDom.value);
+        var a = -1;
+        var b = 1;
+        var result = []
+        for (i = 1; i <= inputValue; i++) {
+            var c = a + b
+            result.push(c)
+            a = b
+            b = c
+        }
+        resultDom.value = result.join(', ')
+    }
+
+    function series2() {
+        var inputValue = parseInt(inputBoxDom.value);
+        var a = -1
+        var b = 1
+        var result = []
+        for (i = inputValue; i>0; i--) {
+            c = a + b
+            result.push(c)
+            a = b
+            b = c
+        }
+        resultDom.value = result.join(', ')
+    }
+</script>
+</html>

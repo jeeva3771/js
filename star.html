@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>star</title>
+        <style>
+            .pattern {
+            text-align: center;
+            font-size: x-large;
+        }
+        </style>
+    </head>
+    <body>
+        <div id = "pattern" class="pattern">
+
+        </div>
+    </body>
+    <script>
+        function star() {
+            let pattern = '';
+            for (i = 0; i < 5; i++) {
+                for (j = 0; j <= i; j++) {
+                    pattern += '* ';
+                }
+                pattern += '\n'; 
+            }
+            document.getElementById("pattern").innerText = pattern;
+        }
+        star();
+    </script>
+</html>
