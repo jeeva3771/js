@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <title>
+        Numbers
+    </title>
+</head>
+
+<body>
+    <div id="table"></div>
+</body>
+<script>
+    function numbers() {
+        let num = []
+        let row = 10
+        let col = 10
+        let h = 1
+        for (i = 1; i <= row; i++) {
+            num[i] = []
+            for (j = 1; j <= col; j++) {
+                num[i][j] = h++
+            }
+        }
+        num.shift()
+        let cleanedArrays = num.map(subArraym => subArray.slice(1));
+    
+        console.log(cleanedArrays)
+        console.log(cleanedArrays[9][9])
+    }
+    numbers()
+</script>
+
+</html>
