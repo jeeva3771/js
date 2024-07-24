@@ -28,18 +28,28 @@
       color: white;
     }
 
-    .action {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      border: 1px solid black;
-      padding: 4px
-    }
-
     .clr2 {
       background-color: brown;
       border-radius: 6px;
       color: white;
+    }
+
+    .addLabel {
+      display: flex;
+      justify-content: right;
+      padding-bottom: 10px;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+    }
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
     }
   </style>
 </head>
@@ -47,10 +57,12 @@
 <body>
   <div class="container">
     <div>
+      <div class="addLabel">
+        <button class="add" onclick="addStudent()">Add Student</button>
+      </div>
       <table class="frame">
         <thead>
           <tr>
-            <th></th>
             <th>Name</th>
             <th>Tamil</th>
             <th>English</th>
@@ -58,47 +70,52 @@
             <th>Science</th>
             <th>Social</th>
             <th>Total</th>
+            <th>Action</th>
+            <th>Rank</th>
           </tr>
-        <tbody>
+        </thead>
+        <tbody id="add">
           <tr>
-            <td><button class="clr">Delete</button></td>
             <td><input type="text" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><button class="clr">Delete</button> <button class="clr2">Edit</button></td>
+            <td><input type="number" class="label" /></td>
           </tr>
           <tr>
-            <td><button class="clr">Delete</button></td>
             <td><input type="text" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
-            <td><input type="text" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><button class="clr">Delete</button> <button class="clr2">Edit</button></td>
+            <td><input type="number" class="label" /></td>
           </tr>
         </tbody>
-        </thead>
       </table>
-    </div>
-    <div class="action">
-      <label>Action</label>
-      <button class="clr2">Edit</button>
-      <button class="clr2">Edit</button>
-    </div>
-      <div>
-        <button class="add">Add Student</button>
-      </div>
-      <div class="action">
-        <label>Rank</label>
-       <input type="number" class="label" />
-       <input type="number"class="label" />
-
-      </div>
-  </div>
 </body>
+<script>
+  function addStudent() {
+    var add = document.getElementById("add")
+    var addLabel = `<tr>
+            <td><input type="text" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><input type="number" class="label" /></td>
+            <td><button class="clr">Delete</button> <button class="clr2">Edit</button></td>
+            <td><input type="number" class="label" /></td>
+            </tr>`
+    add.innerHTML += addLabel
+  }
+</script>
 
 </html>
