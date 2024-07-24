@@ -1,0 +1,56 @@
+<html>
+
+    </html>
+
+
+2)
+
+    function alphabet() {
+        let result = ''
+        for (i = 0, k = 0; i <= 24; i++) {
+            for (j = 0; j <= k; j++) {
+                if(i<=0) {
+                    result += 'a'
+                }
+                else if (i<=1) {
+                result += 'b'
+                k++
+             }else {
+                result = 'err'
+             }
+            }
+            
+            result += '\n'
+        }
+        
+        return result
+    }
+    document.getElementById("output").innerHTML = alphabet()
+
+3)
+    function alphabet() {
+        let result = ''
+        for (i = 0; i <= 24; i++) {
+            for (j = 0; j <= i;) {
+                result += 'a'
+            }
+        }
+        
+        return result
+    }
+    document.getElementById("output").innerHTML = alphabet()
+
+
+    function alphabet() {
+        let result = ''
+        for (i = 0; i <= 24; i++) {
+            for (j = 0; j <= i;) {
+                result += 'a'
+            }
+            if(i<=2) {
+                result += 'b'
+            }
+            result += '\n'
+        }
+        return result
+    }
