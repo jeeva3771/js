@@ -70,51 +70,63 @@
             <th>Science</th>
             <th>Social</th>
             <th>Total</th>
-            <th>Action</th>
             <th>Rank</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody id="add">
-          <tr>
-            <td><input type="text" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><button class="clr">Delete</button> <button class="clr2">Edit</button></td>
-            <td><input type="number" class="label" /></td>
-          </tr>
-          <tr>
-            <td><input type="text" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><button class="clr">Delete</button> <button class="clr2">Edit</button></td>
-            <td><input type="number" class="label" /></td>
-          </tr>
+        <tbody id="studentList">
         </tbody>
       </table>
 </body>
 <script>
+  var studentList = document.getElementById("studentList")
   function addStudent() {
-    var add = document.getElementById("add")
-    var addLabel = `<tr>
-            <td><input type="text" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><input type="number" class="label" /></td>
-            <td><button class="clr">Delete</button> <button class="clr2">Edit</button></td>
-            <td><input type="number" class="label" /></td>
-            </tr>`
-    add.innerHTML += addLabel
+    var studentRow = `<tr>
+              <td><input type="text" /></td>
+              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
+              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
+              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
+              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
+              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
+              <td><input type="text" result="total" readonly class="label" /></td>
+              <td><input type="text" result="rank" readonly class="label" /></td>
+              <td>
+                  <button class="clr" onclick="deleteRow(this)">Delete</button></td>
+              </tr>`
+    studentList.insertAdjacentHTML('beforeend', studentRow);
+  }
+
+  function updateRanks() {
+    var total = []
+    let studentRows = Array.from(document.querySelectorAll('#studentList tr'))
+    var totalMarksArray = studentRows.map(row => {
+      var totalInput = row.querySelector('input[result="total"]')
+      return { 
+        total: parseInt(totalInput.value || 0),
+        row,
+      }
+    })
+    var sortedRanks = totalMarksArray.sort((a,b) => b.total-a.total)
+    sortedRanks.forEach((element, index) => {
+        var rankInput = element.row.querySelector('input[result="rank"]');
+        rankInput.value = index + 1;
+      });
+  }
+
+  function changeMark(e) {
+    const tableRow = e.parentElement.parentElement;
+    const numberInputs = tableRow.querySelectorAll('input[type="number"]');
+    var total = 0
+    numberInputs.forEach(function (inputbox) {
+      total = total + parseInt(inputbox.value || 0)
+    });
+    const totalInput = tableRow.querySelector('input[result="total"]');
+    totalInput.value = total
+    updateRanks()
+  }
+
+  function deleteRow(e) {
+    e.parentElement.parentElement.remove()
   }
 </script>
 

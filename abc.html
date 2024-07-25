@@ -1,56 +1,78 @@
-<html>
+function allTotalMark(e) {
+    const numberTotal = e.querySelectorAll('input[result="total"]')
+    var t = numberTotal.value
+    console.log(t)
+   }
 
-    </html>
+ 
 
-
-2)
-
-    function alphabet() {
-        let result = ''
-        for (i = 0, k = 0; i <= 24; i++) {
-            for (j = 0; j <= k; j++) {
-                if(i<=0) {
-                    result += 'a'
-                }
-                else if (i<=1) {
-                result += 'b'
-                k++
-             }else {
-                result = 'err'
-             }
-            }
-            
-            result += '\n'
-        }
-        
-        return result
-    }
-    document.getElementById("output").innerHTML = alphabet()
-
-3)
-    function alphabet() {
-        let result = ''
-        for (i = 0; i <= 24; i++) {
-            for (j = 0; j <= i;) {
-                result += 'a'
-            }
-        }
-        
-        return result
-    }
-    document.getElementById("output").innerHTML = alphabet()
+  function changeMark(e) {
+    var allTotalMarks = []
+    var ranksMap = []
+    const tableRow = e.parentElement.parentElement;
+    const numberInputs = tableRow.querySelectorAll('input[type="number"]');
+    var total = 0
+    numberInputs.forEach(function (inputbox) {
+      total = total + parseInt(inputbox.value || 0)
+    }); 
+    const totalInput = tableRow.querySelector('input[result="total"]');
+    totalInput.value = total
+    ranksMap.push({ totalInput, total})
+  }
 
 
-    function alphabet() {
-        let result = ''
-        for (i = 0; i <= 24; i++) {
-            for (j = 0; j <= i;) {
-                result += 'a'
-            }
-            if(i<=2) {
-                result += 'b'
-            }
-            result += '\n'
-        }
-        return result
-    }
+
+
+  ===============================================
+
+
+
+
+
+  function changeMark(e) {
+    var allTotalMarks = []
+    var ranksMap = []
+    const tableRow = e.parentElement.parentElement;
+    const numberInputs = tableRow.querySelectorAll('input[type="number"]');
+    var total = 0
+    numberInputs.forEach(function (inputbox) {
+      total = total + parseInt(inputbox.value || 0)
+    }); 
+    const totalInput = tableRow.querySelector('input[result="total"]');
+    totalInput.value = total
+    ranksMap.push({ totalInput, total})
+
+  const numberTotal = tableRow.parentElement
+  const markInputs = numberTotal.querySelectorAll('input[result="total"]').value
+  console.log(markInputs)
+
+  }
+
+
+
+  =================================================
+
+  function allTotalMarks(e) {
+    console.log(ranksMap[0])
+    return
+   }
+
+  function changeMark(e) {
+    var allTotalMarks = []
+    var ranksMap = []
+    const tableRow = e.parentElement.parentElement;
+    const numberInputs = tableRow.querySelectorAll('input[type="number"]');
+    var total = 0
+    numberInputs.forEach(function (inputbox) {
+      total = total + parseInt(inputbox.value || 0)
+    });
+    const totalInput = tableRow.querySelector('input[result="total"]');
+    totalInput.value = total
+    ranksMap.push({ totalInput, total })
+    allTotalMarks(ranksMap)
+    // const numberTotal = tableRow.parentElement
+    // const markInputs = numberTotal.querySelectorAll('input[result="total"]')
+    // var m = markInputs.value
+    // console.log(m)
+
+  }

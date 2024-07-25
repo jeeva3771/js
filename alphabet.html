@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>alphabet</title>
+    <style>
+        .num {
+            text-align: center;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <div id="result" class="num"></div>
+</body>
+<script>
+    function alphabet() {
+        let result = ''
+        for (var i = 1, l=97; i <= 26; i++,l++) {
+            for (var j = 1; j <= i; j++) {
+                //result += letter[i] + '\n'
+                result += String.fromCharCode(l) + '&nbsp;'
+            }
+            result += '<br>'
+        }
+        return result
+    }
+    document.getElementById("result").innerHTML = alphabet()
+</script>
+
+</html>

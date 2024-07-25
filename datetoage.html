@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>FamilyDb-date to age</title>
+</head>
+<style>
+    .widHt {
+        width: 200px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .submit {
+        width: 100px;
+        height: 40px;
+        background-color: black;
+        color: white;
+        font-size: larger;
+        border-radius: 6px;
+    }
+
+    .section {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .click {
+        display: flex;
+        justify-content: center;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        margin: 70px;
+    }
+
+    .widHt-2 {
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .part {
+        display: flex;
+        gap: 20px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="section">
+            <div class="part">
+                <input type="text" class="widHt" id="dad" placeholder="Dad Name">
+                <input type="date" id="dadDob">
+                <input type="text" class="widHt-2" placeholder="Age" id="dadAge">
+            </div>
+            <div class="part">
+                <input type="text" class="widHt" id="mom" placeholder="Mom Name">
+                <input type="date" id="momDob">
+                <input type="text" class="widHt-2" placeholder="Age" id="momAge">
+            </div>
+            <div class="part">
+                <input type="text" class="widHt" id="son" placeholder="Son Name">
+                <input type="date" id="sonDob">
+                <input type="text" class="widHt-2" placeholder="Age" id="sonAge">
+            </div>
+            <div class="part">
+                <input type="text" class="widHt" id="daughter" placeholder="Daughter Name">
+                <input type="date" id="daughterDob">
+                <input type="text" class="widHt-2" placeholder="Age" id="daughterAge">
+            </div>
+            <span class="click">
+                <button onclick="data()" class="submit">Submit</button>
+            </span>
+        </div>
+    </div>
+</body>
+<script>
+    function date(dob) {
+        var split = dob.split('-')
+        var birth = new Date(split[0], split[1], split[2])
+        var currentDate = new Date().getTime()
+        var diff = currentDate - birth
+        var currentAge = Math.floor(diff / 31557600000)
+        return currentAge
+    }
+    function data() {
+        var dad = document.getElementById('dad').value;
+        var mom = document.getElementById('mom').value;
+        var son = document.getElementById('son').value;
+        var daughter = document.getElementById('daughter').value;
+        var dadDob = document.getElementById('dadDob').value;
+        var momDob = document.getElementById('momDob').value;
+        var sonDob = document.getElementById('sonDob').value;
+        var daughterDob = document.getElementById('daughterDob').value;
+
+        document.getElementById('dadAge').value = date(dadDob)
+        document.getElementById('momAge').value = date(momDob)
+        document.getElementById('sonAge').value = date(sonDob)
+        document.getElementById('daughterAge').value = date(daughterDob) 
+    }
+</script>
+
+</html>
