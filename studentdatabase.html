@@ -2,24 +2,15 @@
 
 <head>
   <title>StudentDatabase</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
-    .clr {
-      background-color: rgb(33, 185, 58);
-      border-radius: 10px;
-      color: black;
-    }
-
     .addstud {
       background-color: black;
       color: white;
       height: 40px;
       border-radius: 4px;
-    }
-
-    .clr2 {
-      background-color: brown;
-      border-radius: 6px;
-      color: white;
+      cursor: pointer;
     }
 
     .addLabel {
@@ -32,63 +23,76 @@
       border: none;
     }
 
-    td,
-    th {
-      border: 1px solid #dddddd;
-      text-align: left;
-    }
-
-    table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    table input[type=number] {
+    table input[type] {
       width: 100px;
+    }
+
+    .rowError td {
+      background-color: red;
+    }
+
+    .container {
+      width: 1030px;
+    }
+
+    .resize {
+      display: flex;
+      justify-content: center;
+    }
+
+    .clickEvent {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
     }
   </style>
 </head>
 
 <body>
-  <div style="width: 800px; margin: 0px auto;">
+  <div class="container">
+    <div class="clickEvent">
+      <button type="button" class="btn btn-secondary">Total</button>
+      <button type="button" class="btn btn-secondary">Priority</button>
+    </div>
     <div class="addLabel">
       <button class="addstud" onclick="addStudent()">Add Student</button>
     </div>
-    <table class="table caption-top">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Tamil</th>
-          <th scope="col">English</th>
-          <th scope="col">Maths</th>
-          <th scope="col">Science</th>
-          <th scope="col">Social</th>
-          <th scope="col">Total</th>
-          <th scope="col">Rank</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody id="studentList">
-  
-      </tbody>
-    </table>
+    <div class="resize">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Tamil</th>
+            <th scope="col">English</th>
+            <th scope="col">Maths</th>
+            <th scope="col">Science</th>
+            <th scope="col">Social</th>
+            <th scope="col">Total</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="studentList">
+
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 <script>
   var studentList = document.getElementById("studentList")
   function addStudent() {
     var studentRow = `<tr>
-              <td><input type="text" class="label"/></td>
-              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
-              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
-              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
-              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
-              <td><input type="number" onchange="changeMark(this)" class="label" /></td>
-              <td><input type="text" result="total" readonly class="label" /></td>
-              <td><input type="text" result="rank" readonly class="label" /></td>
+              <td><input type="text" class="form-control"/></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="text" result="total" readonly class="form-control" /></td>
+              <td><input type="text" result="rank" readonly class="form-control" /></td>
               <td>
-                  <button class="clr" onclick="deleteRow(this)">Delete</button></td>
+                  <button type="button" class="btn btn-primary" onclick="deleteRow(this)">Delete</button></td>
               </tr>`
     studentList.insertAdjacentHTML('beforeend', studentRow);
   }
@@ -102,36 +106,58 @@
         total: parseInt(totalInput.value || 0),
         row,
       }
-      
     })
     var sortedRanks = totalMarksArray.sort((a, b) => b.total - a.total)
-    sortedRanks.forEach((element, index) => {
-      var rankInput = element.row.querySelector('input[result="rank"]')
-      var isFailGrade = Array.from(element.row.querySelectorAll('input[type="number"]')).some((input)=>input.value <35)
-      rankInput.value = isFailGrade ? 0 : index + 1
-      changeMark() 
-    })
+    console.log(sortedRanks)
+    var currentRank = 1;
+    for (var i = 0; i < sortedRanks.length; i++) {
+      var element = sortedRanks[i];
+      var rankInput = element.row.querySelector('input[result="rank"]');
+      var isFailGrade = Array.from(element.row.querySelectorAll('input[type="number"]')).some((input) => input.value < 35);
+
+      if (isFailGrade) {
+        rankInput.value = 0;
+      } else {
+        if (i > 0 && sortedRanks[i].total === sortedRanks[i - 1].total) {
+          rankInput.value = currentRank - 1;
+          // updateRanks()
+        } else {
+          rankInput.value = currentRank;
+        }
+        currentRank++;
+      }
+    }
   }
 
   function changeMark(e) {
-    // if (e.value < 0) e.value = 0;
-    // if (e.value > 100) e.value = 100;
-
-  //   function changeMark(e) {
-  //   if (e.value < 0 || e.value > 100) {
-  //     e.style.display = 'inline';
-  //   } else {
-  //     e.style.display = 'none';
-  //   }
-  // }
+    if (e.value < 0) e.value = '';
+    if (e.value > 100) e.value = '';
     const tableRow = e.parentElement.parentElement;
     const numberInputs = tableRow.querySelectorAll('input[type="number"]');
     var total = 0
+    var isEmptyValue = false
+
     numberInputs.forEach(function (inputbox) {
+      if (inputbox.value === '') {
+        isEmptyValue = true
+      }
       total = total + parseInt(inputbox.value || 0)
     });
     const totalInput = tableRow.querySelector('input[result="total"]');
     totalInput.value = total
+
+    // if(isEmptyValue===true){
+    //   isEmptyValue = false
+    //   tableRow.style.backgroundColor = isEmptyValue ? 'red' : '';
+    // }
+
+
+    if (isEmptyValue) {
+      tableRow.classList.add('rowError');
+    } else {
+      tableRow.classList.remove('rowError');
+    }
+
     updateRanks()
   }
 
