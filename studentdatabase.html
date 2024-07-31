@@ -59,7 +59,8 @@
 <body>
   <div class="container">
     <div class="form-check form-check-inline radioLabel">
-      <input class="form-check-input" type="radio" checked name="inlineRadioOptions" id="inlineRadio1" value="option1">
+      <input class="form-check-input" type="radio" checked name="inlineRadioOptions" onclick="total()" id="inlineRadio1"
+        value="option1">
       <label class="form-check-label radioButton" for="inlineRadio1">Total</label>
     </div>
     <div class="form-check form-check-inline">
@@ -178,6 +179,22 @@
     updateRanks()
   }
 
+  function total() {
+    let studentRows = Array.from(document.querySelectorAll('#studentList tr'))
+    // console.log(studentRows)
+    var totalMarksArray = studentRows.map((row) => {
+      var totalInput = row.querySelector('input[result="total"]')
+      return {
+        total: parseInt(totalInput.value || 0),
+        row,
+      }
+    })
+    var sortedRanks = totalMarksArray.sort((a, b) => a.total - b.total)
+    sortedRanks.forEach((student) => {
+      studentList.appendChild(student.row);
+    })
+  }
+
   function Priority() {
     let student = Array.from(document.querySelectorAll('#studentList tr'))
     var studentName = student.map((row) => {
@@ -190,50 +207,29 @@
     // var sort = studentName.sort()
     // console.log(sort)
 
-    currentUsers = studentName.sort((a, b) =>{
+    var currentUsers = studentName.sort((a, b) => {
       if (a.studName > b.studName) {
         return 1;
       } else if (a.studName < b.studName) {
         return -1;
       }
     })
-    console.log(currentUsers)
-    // studentList.innerHTML = '';
-      currentUsers.forEach((student) => {
-        studentList.appendChild(student.row);
+    currentUsers.forEach((student) => {
+      studentList.appendChild(student.row);
+    })
+    var studentMarkTr = Array.from(document.querySelectorAll('#studentList tr'))
+      var marks = studentMarkTr.map((row) => {
+        var marksValue = row.querySelector('input[type="number"]')
+        return {
+          studMarks: marksValue.value,
+          row,
+        }
       })
-    }
-
-    
-  //   var currentRank = 0;
-  //   var sameRank = 1
-  //   for (var i = 0; i < currentUsers.length; i++) {
-  //     var element = currentUsers[i];
-  //     var rankInput = element.row.querySelector('input[result="rank"]');
-  //     var isFailGrade = Array.from(element.row.querySelectorAll('input[type="number"]')).some((input) => input.value < 35);
-
-  //     if (isFailGrade) {
-  //       rankInput.value = 0;
-  //     } else {
-  //       if (i > 0 && currentUsers[i].total === currentUsers[i - 1].total) {
-  //         rankInput.value = currentRank;
-  //         sameRank++
-  //       } else {
-  //         if (sameRank > 1) {
-  //           currentRank = currentRank + sameRank
-  //           sameRank = 1
-  //         } else {
-  //           currentRank++;
-  //         }
-  //         rankInput.value = currentRank;
-  //       }
-
-  //     }
-  //   }
-  // }
-
-  
-
+      //console.log(marks)
+      marks.forEach(marksnum => {
+        console.log(marksnum)
+      })
+  }
 </script>
 
 </html>
