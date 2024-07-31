@@ -19,6 +19,12 @@
       padding-bottom: 10px;
     }
 
+    .radioButton {
+      font-family: inherit;
+      font-size: large;
+      font-weight: 500;
+    }
+
     .label {
       border: none;
     }
@@ -40,19 +46,26 @@
       justify-content: center;
     }
 
-    .clickEvent {
-      display: flex;
-      gap: 4px;
-      margin-top: 6px;
+    .radioLabel {
+      margin-top: 10px;
+    }
+
+    input[type=radio] {
+      border: 1px solid gray;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="clickEvent">
-      <button type="button" class="btn btn-secondary">Total</button>
-      <button type="button" class="btn btn-secondary">Priority</button>
+    <div class="form-check form-check-inline radioLabel">
+      <input class="form-check-input" type="radio" checked name="inlineRadioOptions" id="inlineRadio1" value="option1">
+      <label class="form-check-label radioButton" for="inlineRadio1">Total</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" onclick="Priority()" name="inlineRadioOptions" id="inlineRadio2"
+        value="option2">
+      <label class="form-check-label radioButton" for="inlineRadio2">Priority</label>
     </div>
     <div class="addLabel">
       <button class="addstud" onclick="addStudent()">Add Student</button>
@@ -81,6 +94,7 @@
 </body>
 <script>
   var studentList = document.getElementById("studentList")
+
   function addStudent() {
     var studentRow = `<tr>
               <td><input type="text" class="form-control"/></td>
@@ -97,7 +111,6 @@
     studentList.insertAdjacentHTML('beforeend', studentRow);
   }
 
-
   function updateRanks() {
     let studentRows = Array.from(document.querySelectorAll('#studentList tr'))
     var totalMarksArray = studentRows.map((row) => {
@@ -108,8 +121,8 @@
       }
     })
     var sortedRanks = totalMarksArray.sort((a, b) => b.total - a.total)
-    console.log(sortedRanks)
-    var currentRank = 1;
+    var currentRank = 0;
+    var sameRank = 1
     for (var i = 0; i < sortedRanks.length; i++) {
       var element = sortedRanks[i];
       var rankInput = element.row.querySelector('input[result="rank"]');
@@ -119,12 +132,18 @@
         rankInput.value = 0;
       } else {
         if (i > 0 && sortedRanks[i].total === sortedRanks[i - 1].total) {
-          rankInput.value = currentRank - 1;
-          // updateRanks()
+          rankInput.value = currentRank;
+          sameRank++
         } else {
+          if (sameRank > 1) {
+            currentRank = currentRank + sameRank
+            sameRank = 1
+          } else {
+            currentRank++;
+          }
           rankInput.value = currentRank;
         }
-        currentRank++;
+
       }
     }
   }
@@ -146,18 +165,11 @@
     const totalInput = tableRow.querySelector('input[result="total"]');
     totalInput.value = total
 
-    // if(isEmptyValue===true){
-    //   isEmptyValue = false
-    //   tableRow.style.backgroundColor = isEmptyValue ? 'red' : '';
-    // }
-
-
     if (isEmptyValue) {
       tableRow.classList.add('rowError');
     } else {
       tableRow.classList.remove('rowError');
     }
-
     updateRanks()
   }
 
@@ -165,6 +177,63 @@
     e.parentElement.parentElement.remove()
     updateRanks()
   }
+
+  function Priority() {
+    let student = Array.from(document.querySelectorAll('#studentList tr'))
+    var studentName = student.map((row) => {
+      var name = row.querySelector('input[type="text"]')
+      return {
+        studName: name.value,
+        row,
+      }
+    })
+    // var sort = studentName.sort()
+    // console.log(sort)
+
+    currentUsers = studentName.sort((a, b) =>{
+      if (a.studName > b.studName) {
+        return 1;
+      } else if (a.studName < b.studName) {
+        return -1;
+      }
+    })
+    console.log(currentUsers)
+    // studentList.innerHTML = '';
+      currentUsers.forEach((student) => {
+        studentList.appendChild(student.row);
+      })
+    }
+
+    
+  //   var currentRank = 0;
+  //   var sameRank = 1
+  //   for (var i = 0; i < currentUsers.length; i++) {
+  //     var element = currentUsers[i];
+  //     var rankInput = element.row.querySelector('input[result="rank"]');
+  //     var isFailGrade = Array.from(element.row.querySelectorAll('input[type="number"]')).some((input) => input.value < 35);
+
+  //     if (isFailGrade) {
+  //       rankInput.value = 0;
+  //     } else {
+  //       if (i > 0 && currentUsers[i].total === currentUsers[i - 1].total) {
+  //         rankInput.value = currentRank;
+  //         sameRank++
+  //       } else {
+  //         if (sameRank > 1) {
+  //           currentRank = currentRank + sameRank
+  //           sameRank = 1
+  //         } else {
+  //           currentRank++;
+  //         }
+  //         rankInput.value = currentRank;
+  //       }
+
+  //     }
+  //   }
+  // }
+
+  
+
 </script>
 
 </html>
