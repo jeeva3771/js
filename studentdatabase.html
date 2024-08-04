@@ -59,14 +59,12 @@
 <body>
   <div class="container">
     <div class="form-check form-check-inline radioLabel">
-      <input class="form-check-input" type="radio" checked name="inlineRadioOptions" onclick="total()" id="inlineRadio1"
-        value="option1">
-      <label class="form-check-label radioButton" for="inlineRadio1">Total</label>
+      <input class="form-check-input" type="radio" checked name="inlineRadioOptions" id="total" value="option1">
+      <label class="form-check-label radioButton" for="total">Rank by total</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" onclick="Priority()" name="inlineRadioOptions" id="inlineRadio2"
-        value="option2">
-      <label class="form-check-label radioButton" for="inlineRadio2">Priority</label>
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="priority" value="option2">
+      <label class="form-check-label radioButton" for="priority">Rank by priority</label>
     </div>
     <div class="addLabel">
       <button class="addstud" onclick="addStudent()">Add Student</button>
@@ -96,40 +94,9 @@
 <script>
   var studentList = document.getElementById("studentList")
   var rankDatabase = []
-  function addStudent() {
-    var studentRow = `<tr>
-              <td><input type="text" class="form-control"/></td>
-              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
-              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
-              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
-              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
-              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
-              <td><input type="text" result="total" readonly class="form-control" /></td>
-              <td><input type="text" result="rank" readonly class="form-control" /></td>
-              <td>
-                  <button type="button" class="btn btn-primary" onclick="deleteRow(this)">Delete</button></td>
-              </tr>`
-    studentList.insertAdjacentHTML('beforeend', studentRow);
-    
-  }
-  
-  function updateRanks() {
-    var studentRows = Array.from(document.querySelectorAll('#studentList tr'))
-    var totalMarksArray = studentRows.map((row) => {
-    var name = row.querySelector('input[type="text"]').value;
-    var marks = Array.from(row.querySelectorAll('input[type="number"]')).map(input => parseInt(input.value || 0));
-    var totalInput = row.querySelector('input[result="total"]')
-    
-      return {
-        name : name,
-        marks : marks,
-        total: parseInt(totalInput.value || 0),
-        row: row,
-      }
-    })
 
-    var sortedRanks = totalMarksArray.sort((a, b) => b.total - a.total)
-
+  function rankBasedOnTotal() {
+    var sortedRanks = rankDatabase.sort((a, b) => { return b.total - a.total })
     var currentRank = 0;
     var sameRank = 1
 
@@ -137,7 +104,7 @@
       var element = sortedRanks[i];
       var rankInput = element.row.querySelector('input[result="rank"]');
       var isFailGrade = element.marks.some(mark => mark < 35);
-      
+
       if (isFailGrade) {
         rankInput.value = 0;
       } else {
@@ -153,17 +120,95 @@
           }
           rankInput.value = currentRank;
         }
-
       }
     }
+  }
 
-    rankDatabase.push({
-            name: element.name,
-            marks: element.marks,
-            total: element.total,
-            rank: parseInt(rankInput.value),
-        });
-        console.log(rankDatabase)
+  function rankBasedOnPriority() {
+    const rankGroup = {}
+    const rankGroupKey = []
+    var currentRank = 0;
+    var sameRank = 1
+    const dataSorted = rankDatabase.sort((a, b) => b.total - a.total)
+    for (i = 0; i < dataSorted.length; i++) {
+      var t = dataSorted[i].total
+
+      if (rankGroup[t]) {
+        const combined = [...rankGroup[t], dataSorted[i]];
+        console.log(combined)
+        var nameSorted = combined.sort((a, b) => a.name.localeCompare(b.name))
+        rankGroup[t] = nameSorted
+      } else {
+        rankGroup[t] = [dataSorted[i]]
+      }
+    }
+    for (let key in rankGroup) {
+      rankGroupKey.push(key)
+    }
+
+    rankGroupKey.sort((a, b) => b - a);
+
+    for (i = 0; i < rankGroupKey.length; i++) {
+      const key = rankGroupKey[i];
+      const elements = rankGroup[key];
+
+      elements.forEach((element) => {
+        const rankInput = element.row.querySelector('input[result="rank"]');
+        const isFailGrade = element.marks.some(mark => mark < 35);
+        if (isFailGrade) {
+          rankInput.value = 0;
+        } else {
+          if (i > 0 && elements[i].total === elements[i - 1].total) {
+            rankInput.value = currentRank;
+            sameRank++
+          } else {
+            if (sameRank > 1) {
+              currentRank = currentRank + sameRank
+              sameRank = 1
+            } else {
+              currentRank++;
+            }
+            rankInput.value = currentRank;
+          }
+        }
+      })
+    }
+  }
+  function addStudent() {
+    var studentRow = `<tr>
+              <td><input type="text" class="form-control"/></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="number" onkeyup="changeMark(this)" class="form-control" /></td>
+              <td><input type="text" result="total" readonly class="form-control" /></td>
+              <td><input type="text" result="rank" readonly class="form-control" /></td>
+              <td>
+                  <button type="button" class="btn btn-primary" onclick="deleteRow(this)">Delete</button></td>
+              </tr>`
+    studentList.insertAdjacentHTML('beforeend', studentRow);
+  }
+
+  function updateRanks() {
+    var studentRows = Array.from(document.querySelectorAll('#studentList tr'))
+    rankDatabase = studentRows.map((row) => {
+      var name = row.querySelector('input[type="text"]').value;
+      var marks = Array.from(row.querySelectorAll('input[type="number"]')).map(input => parseInt(input.value || 0));
+      var totalInput = row.querySelector('input[result="total"]')
+      return {
+        name: name,
+        marks: marks,
+        total: parseInt(totalInput.value || 0),
+        row,
+      }
+    })
+
+    if (document.getElementById('total').checked) {
+      rankBasedOnTotal()
+    } else {
+      rankBasedOnPriority()
+    }
   }
 
   function changeMark(e) {
@@ -195,16 +240,6 @@
     e.parentElement.parentElement.remove()
     updateRanks()
   }
-
-  // let studentRows = Array.from(document.querySelectorAll('#studentList tr'))
-  // studentRows.map((rows)=>{
-  //   rankDatabase.push(rows)
-  //   console.log(rankDatabase)
-
-  // })
-
-
-  
 
 </script>
 
