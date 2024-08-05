@@ -59,7 +59,7 @@
 <body>
   <div class="container">
     <div class="form-check form-check-inline radioLabel">
-      <input class="form-check-input" type="radio" checked name="inlineRadioOptions" id="total" value="option1">
+      <input class="form-check-input" type="radio" checked="false"  name="inlineRadioOptions" id="total" value="option1">
       <label class="form-check-label radioButton" for="total">Rank by total</label>
     </div>
     <div class="form-check form-check-inline">
@@ -128,15 +128,16 @@
     const rankGroup = {}
     const rankGroupKey = []
     var currentRank = 0;
-    var sameRank = 1
+  
     const dataSorted = rankDatabase.sort((a, b) => b.total - a.total)
     for (i = 0; i < dataSorted.length; i++) {
       var t = dataSorted[i].total
 
       if (rankGroup[t]) {
         const combined = [...rankGroup[t], dataSorted[i]];
-        console.log(combined)
-        var nameSorted = combined.sort((a, b) => a.name.localeCompare(b.name))
+        var nameSorted = combined.sort((a, b) => {
+          return a.name.localeCompare(b.name) || b.marks[0] - a.marks[0] || b.marks[1] - a.marks[1] || b.marks[2] - a.marks[2] || b.marks[3] - a.marks[3] || b.marks[4] - a.marks[4]
+        })
         rankGroup[t] = nameSorted
       } else {
         rankGroup[t] = [dataSorted[i]]
@@ -158,22 +159,13 @@
         if (isFailGrade) {
           rankInput.value = 0;
         } else {
-          if (i > 0 && elements[i].total === elements[i - 1].total) {
-            rankInput.value = currentRank;
-            sameRank++
-          } else {
-            if (sameRank > 1) {
-              currentRank = currentRank + sameRank
-              sameRank = 1
-            } else {
-              currentRank++;
-            }
-            rankInput.value = currentRank;
+          currentRank++
+          rankInput.value = currentRank;
           }
-        }
-      })
+        })
+      }
     }
-  }
+  
   function addStudent() {
     var studentRow = `<tr>
               <td><input type="text" class="form-control"/></td>
