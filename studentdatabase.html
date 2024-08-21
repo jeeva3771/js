@@ -132,7 +132,6 @@
     const dataSorted = rankDatabase.sort((a, b) => b.total - a.total)
     for (i = 0; i < dataSorted.length; i++) {
       var t = dataSorted[i].total
-
       if (rankGroup[t]) {
         const combined = [...rankGroup[t], dataSorted[i]];
         var nameSorted = combined.sort((a, b) => {
